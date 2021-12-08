@@ -124,13 +124,21 @@ cat /etc/resolv.conf > $Path/13_resolv-conf.txt
 echo "Check OS..........."
 dmidecode -s system-product-name > $Path/14_OS-system.txt
 
-echo "Check Mail queues............"
+echo "Check Mail Queues............"
 su - zimbra -c 'mailq' > /tmp/4-zimbra-queue.txt
 mv /tmp/4-zimbra-queue.txt $Path
 
-echo "Check Config local............"
+echo "Check Config Local............"
 su - zimbra -c 'zmlocalconfig -s' > /tmp/15_zimbra-config.txt
 mv /tmp/15_zimbra-config.txt $Path
+
+echo "Check Get Server............"
+su - zimbra -c 'zmprov gs `zmhostname`' > /tmp/16_zimbra-get-server.txt
+mv /tmp/16_zimbra-get-server.txt $Path
+
+echo "Check Get All Config............"
+su - zimbra -c 'zmprov gacf' > /tmp/17_zimbra-get-all-config.txt
+mv /tmp/17_zimbra-get-all-config.txt $Path
 
 mkdir $Path/2.cfg2html
 mv $Path/$Hostname* $Path/2.cfg2html
@@ -156,6 +164,8 @@ mv $Path/12_* $Path/MAN
 mv $Path/13_* $Path/MAN
 mv $Path/14_* $Path/MAN
 mv $Path/15_* $Path/MAN
+mv $Path/16_* $Path/MAN
+mv $Path/17_* $Path/MAN
 
 
 mv $Path/1..* $Path/MON
